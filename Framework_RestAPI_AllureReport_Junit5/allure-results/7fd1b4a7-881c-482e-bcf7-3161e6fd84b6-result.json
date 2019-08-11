@@ -1,0 +1,1 @@
+{"uuid":"7fd1b4a7-881c-482e-bcf7-3161e6fd84b6","historyId":"cc6b5b2a419e4ac218f3e0312410525","labels":[{"name":"suite","value":"com.dps.gmbh.customereg.api.TestDeleteAPI"},{"name":"package","value":"com.dps.gmbh.customereg.api.TestDeleteAPI"}],"links":[],"name":"testDeleteUserAll()","status":"passed","stage":"finished","start":1561380640859,"stop":1561380645389}
