@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>RestAPI-Junit5_Maven_Cucumber_Report</groupId>
+	<artifactId>Template-Framework-BDD-Report</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>Sample-Framework-BDD-Report</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<junit.jupiter.version>5.4.2</junit.jupiter.version>
+		<rest-assured.version>3.3.0</rest-assured.version>
+		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <junit.vintage.version>5.3.1</junit.vintage.version>
+        <junit.platform.version>1.4.2</junit.platform.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>   
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.encoding>UTF-8</project.encoding>
+		<encoding>UTF-8</encoding>
+        <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding> 
+        <java.version>1.8</java.version>
+        <cucumber.version>4.3.0</cucumber.version>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+	</properties>
+
+
+	<dependencies>
+	
+	<!--  JUnit Error Workaround -->
+	<dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.25</version>
+    </dependency>
+    <dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-jdk14</artifactId>
+	    <version>1.7.25</version>
+	</dependency>
+
+	<!-- Added Junit5 Dependency -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+	<!-- Rest Assured Libraries -->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${rest-assured.version}</version>	
+			<scope>compile</scope>		
+		</dependency>
+
+	<!-- Maven Build Compile Dependencies -->
+		<dependency>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-compiler-plugin</artifactId>
+			  <version>3.8.0</version>
+			  <type>maven-plugin</type>
+		</dependency>
+
+	<!--JUNIT 5 Dependencies -->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>${junit.vintage.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-engine</artifactId>
+            <version>${junit.platform.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit.platform.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
+        </dependency>
+
+		
+	<!-- Cucumber dependency -->
+        <dependency>
+		    <groupId>io.cucumber</groupId>
+		    <artifactId>cucumber-java</artifactId>
+		    <version>${cucumber.version}</version>
+		    <scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.cucumber</groupId>
+		    <artifactId>cucumber-junit</artifactId>
+		    <version>${cucumber.version}</version>
+		    <scope>compile</scope>
+		</dependency>
+		
+	<!-- RestAssured requires 'Jackson (databind)' to serialize object  -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.9.8</version>
+		</dependency>
+		
+	</dependencies>
+
+
+<!--  MAVEN BUILD DEPENDENCIES AND PLUGIN -->
+	<build>	
+		<sourceDirectory>src/test/java</sourceDirectory>
+		<plugins>
+         
+            <!-- To compile Maven build --> 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+           
+           <!-- For Cucumber net.Masterthought reporting Purpose -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <includes>
+			           <exclude>**/*RunnerClassTest.java</exclude>
+			        </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>3.15.0</version>
+                <executions>
+                    <execution>
+                        <id>execution</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+			              <projectName>cucumber-jvm-example</projectName>
+			              <outputDirectory>${project.build.directory}/site/cucumber-reports</outputDirectory>
+			              <cucumberOutput>${project.build.directory}/cucumber.json</cucumberOutput>
+			              <skippedFails>true</skippedFails>
+			              <enableFlashCharts>false</enableFlashCharts>
+			              <buildNumber>42</buildNumber>                          
+			              <jsonFiles>
+                              <param>${project.build.directory}/cucumber.json</param>
+                          </jsonFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+     
+            
+        </plugins>
+	</build>
+
+</project>
