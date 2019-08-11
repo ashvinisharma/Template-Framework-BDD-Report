@@ -1,1 +1,0 @@
-{"uuid":"1f075678-9fc4-430a-9e14-41e3e7891a10","historyId":"fd42b3afbbe15f5943c407a7754f617f","labels":[{"name":"suite","value":"com.dps.gmbh.customereg.api.TestPostAPI"},{"name":"package","value":"com.dps.gmbh.customereg.api.TestPostAPI"}],"links":[],"name":"testCreateUniqueUserCheck()","status":"passed","stage":"finished","start":1560943720686,"stop":1560943723621}
